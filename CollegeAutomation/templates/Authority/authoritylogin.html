@@ -1,0 +1,16 @@
+<html>
+
+<head></head>
+<body>
+    <form action="/Authority/login" method="POST">
+        {% csrf_token %}
+    <input type="text" name  = "username" placeholder="Your Username">
+    <br>
+    <input type="password" name="password" placeholder="password">
+   <br>
+    <button type="submit">Submit</button>
+    <br>
+    </form>
+
+</body>
+</html>
