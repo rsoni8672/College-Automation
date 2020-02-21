@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib import auth
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login , logout
 from .models import *
 # Create your views here.
 def register(request):
@@ -54,6 +55,36 @@ def authorityregister(request):
             return render( request , "Authority/authoritylogin.html")
     else:
         return render(request, 'registrations/authorityregister.html' )
+
+def studentlogin(request):
+    if request.method == "POST":
+        username = request.POST.get('username')   
+        password = request.POST.get('password')
+        user  = authenticate(username = username , password = password)
+        if user is not None:
+            login(request,user)
+
+        else:
+            return HttpResponse("invalid Credentials")
+        return HttpResponse("Tdfndkdgx")
+    
+
+    return render(request, "registrations/studentlogin.html")
+
+def authoritylogin(request):
+    if request.method == "POST":
+        username = request.POST.get('username')   
+        password = request.POST.get('password')
+        user  = authenticate(username = username , password = password)
+        if user is not None:
+            login(request,user)
+
+        else:
+            return HttpResponse("invalid Credentials")
+        return HttpResponse("Tdfndkdgx")
+    
+
+    return render(request, "registrations/authoritylogin.html")
 
 
 
