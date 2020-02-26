@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from registrations import urls
+from AlumniTracking import urls
 from .import settings
 from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('registration/', include('registrations.urls')),
-    
+    path('AlumniTracking/', include('AlumniTracking.urls')),
 
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

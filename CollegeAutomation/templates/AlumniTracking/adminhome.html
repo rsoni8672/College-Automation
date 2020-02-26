@@ -1,0 +1,15 @@
+<html>
+
+<head></head>
+<body>
+    <form action="/AlumniTracking/addannouncement" method="POST">
+        {% csrf_token %}
+    <input type="text" name = "Eventname" placeholder="Topic of the announcement">
+    <input type="text" name  = "Description" placeholder="Description of the announcement">
+    <input type="text" name = 'batchyear' placeholder="Whhoch year passouts studemts?">
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+
+</html>
