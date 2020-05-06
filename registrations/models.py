@@ -27,7 +27,6 @@ class student(models.Model):
 
 class authority(models.Model):
     authorityid  = models.ForeignKey(User, on_delete = models.CASCADE)
-    classteacher  = models.CharField(max_length = 50, default ="None")
     contactnumber = models.CharField(max_length = 10)
     email = models.EmailField(max_length = 100)
     
@@ -35,7 +34,7 @@ class authority(models.Model):
         db_table  = "authority"
 
     def __str__(self):
-        return "%s %s %s %s " %(self.userid, self.classteacher, self.contactnumber, self.email)
+        return "%s %s %s " %(self.userid,  self.contactnumber, self.email)
     
 
 

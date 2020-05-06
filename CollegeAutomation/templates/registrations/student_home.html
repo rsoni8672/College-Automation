@@ -1,0 +1,79 @@
+<html>
+    <head>
+            <title>Bootstrap Example</title>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        
+          <form action="/KeyPermission/apply_room">
+          <input type="hidden" name = "localId" value="{{localId}}">
+          <button type="submit"> Apply for Class Permission</button>
+          </form>
+<br>
+          <form action="/KeyPermission/apply_lab" method="GET">
+            <input type="hidden" name = "localId" value="{{localId}}">
+            <button type="submit"> Apply for Lab Permission</button>
+            </form>
+            <br>
+            <form action="/AttendanceRequest/attendance_application" method="GET">
+              <input type="hidden" name = "localId" value="{{localId}}">
+              <button type="submit"> Submit an Attendance Grant Request.</button>
+              </form>
+              <br>
+<div class="container">
+        <table class="table table-hover">
+           <thead>
+             <tr>
+               <th>Students Name</th>
+               <th>Department</th>
+               <th>Email/ Contact Number</th>
+               <th>Requested Rooms</th>
+               <th>Date</th>
+               <th>Start Time</th>
+               <th>End Time</th>
+               <th>Purpose</th>
+               <th>Principal Approval</th>
+               <th>Hod Approval</th>
+             </tr>
+           </thead>
+           <tbody>
+                 {% for f in FinalBookings %}
+       
+               <tr>
+               
+               <td>{{f.Student_Name}}</td>
+               <td>{{f.Student_Department}}</td>
+               <td>{{f.Contact}}   {{f.student.email}}</td>
+               <td>{{f.room_no}}</td>
+               <td>{{f.date}}</td>
+               <td>{{f.start_time}}</td>
+               <td>{{f.end_time}}</td>
+               <td>{{f.purpose}}</td>
+               <td>
+                    {% if f.principal_approved == 1 %}
+                    Approved
+                    {% else %}
+                    Not Yet Approved
+                    {% endif %}
+                </td>
+                <td>
+                        {% if f.hod_approved == 1 %}
+                        Approved
+                        {% else %}
+                        Not Yet Approved
+                        {% endif %}
+                    </td>
+             </tr>
+             {% endfor %}
+           </tbody>
+         </table>
+       </div>
+       
+       </body>
+    
+    </body>
+</html>

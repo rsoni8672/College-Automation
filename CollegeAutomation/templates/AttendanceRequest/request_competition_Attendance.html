@@ -1,0 +1,20 @@
+<html>
+
+<head>
+
+</head>
+<body>
+    <form action="/AttendanceRequest/attendance_application" method = "POST" 
+    enctype="multipart/form-data">
+        {%csrf_token%}
+        <input type="hidden" name="localId"value="{{localId}}">
+    <input type="text" name = "Competition_Name" placeholder="Competition_name">
+    <input type="text" name ="Organization_Name" placeholder="Organization/Institute Name">
+    <input type="date" name = "Start_date" placeholder="Start_date">
+    <input type="date" name  = "End_date" placeholder="End_date">
+    <input type="text" name = "Competition_Location" placeholder="Location of the competition">
+    <input type="file" name="Attendance_Proof" placeholder="Proof of Presence(Participation/Winning Certificate)">
+    <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

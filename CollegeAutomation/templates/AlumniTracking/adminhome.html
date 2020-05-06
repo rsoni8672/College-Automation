@@ -2,6 +2,7 @@
 
 <head></head>
 <body>
+    <h1>Create Announcement </h1>
     <form action="/AlumniTracking/addannouncement" method="POST">
         {% csrf_token %}
     <input type="text" name = "Eventname" placeholder="Topic of the announcement">
@@ -9,7 +10,17 @@
     <input type="text" name = 'batchyear' placeholder="Whhoch year passouts studemts?">
         <button type="submit">Submit</button>
     </form>
+<h1>Search Alumni By Company Name</h1>
+    <form action="/AlumniTracking/search_by_company" method = "POST">
+    <input type="text" name = "companyname" placeholder="Company Name"> 
+    <button type="submit"> Search results</button>
+    </form>
 
+<h1>Search by Alumni Name</h1>
+    <form action="/AlumniTracking/search_by_alumni" method = "POST">
+    <input type="text" name = "alumni_name" placeholder="Students Name"> 
+    <button type="submit"> Search results</button>
+    </form>
 </body>
 
 </html>

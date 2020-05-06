@@ -1,0 +1,40 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h3>Please note that you will get room permission for the span of next four days only.</h3>
+        <form action="/KeyPermission/apply_room" method="POST">
+            {% csrf_token %}
+        <input type="number" name="number_of_rooms" value = "{{number_of_rooms}}" placeholder="Number of rooms required"><br><br>
+        <input type="hidden" name = "localId" value  = "{{localId}}">
+        <input type="date" name = "date" value="{{date}}" placeholder="Date"><br><br>
+        <input type="text" name  = "purpose" value = "{{purpose}}"placeholder="Why do you want the room?"><br><br>
+        <input type="time" name="StartTime" value ="{{StartTime}}"  placeholder="Enter Starting time"><br><br>
+        <input type="time" name = "EndTime" value = "{{EndTime}}" placeholder="By what time do you want the room?"><br><br>
+        <input type="text" name = "requirement_AC" value = "{{requirement_AC}}" placeholder="Do you need AC's ?" ><br><br>
+        <button type="submit" >Submit Request</button><br><br>
+        </form>
+
+{% if i == 1 %}        
+<h1>Available rooms as per your needs are:</h1>
+{% for room in rooms %}
+<h3>{{room}}</h3>
+{% endfor %}
+<h2>Please enter the rooms that you want from these rooms ? </h2>
+  <form action="/KeyPermission/confirm" method="POST">
+    {% csrf_token %}
+<input type="text" name = "room_no" placeholder="Eg: 606, 607">
+<input type="hidden" name="number_of_rooms" value = "{{number_of_rooms}}" placeholder="Number of rooms required">
+<br><br>
+        <input type="hidden" name = "date" value="{{date}}" placeholder="Date"><br><br>
+        <input type="hidden" name = "localId" value  = "{{localId}}">
+        <input type="hidden" name  = "purpose" value="{{purpose}}" placeholder="Why do you want the room?"><br><br>
+        <input type="hidden" name="StartTime" value  ="{{StartTime}}" placeholder="Enter Starting time"><br><br>
+        <input type="hidden" name = "EndTime" value="{{EndTime}}" placeholder="By what time do you want the room?"><br><br>
+        <input type="hidden" name = "requirement_AC" value="{{requirement_AC}}" placeholder="Do you need AC's ?" ><br><br>
+        <button type  = "submit"> Submit Request</button>
+</form>
+{% endif %}
+</body>
+</html>

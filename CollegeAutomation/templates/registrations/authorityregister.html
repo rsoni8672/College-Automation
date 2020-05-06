@@ -1,6 +1,27 @@
 <html>
 
 <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+    function is_faculty(){
+    
+        var rad = document.getElementById('faculty');
+        var ip = document.getElementById('year');
+
+        console.log($(rad).is(':checked'));
+        console.log( $(rad).val());
+        if ($(rad).is(':checked') && $(rad).val() == 'class_teacher') {
+          ip.type = 'text'
+            // append goes here
+        
+    }
+    if ($(rad).is(':checked') == false && $(rad).val() == 'class_teacher') {
+          ip.setAttribute('type','hidden');
+    }
+    }
+
+    </script>
 </head>
 <body>
     <form action="" method="POST">
@@ -9,7 +30,10 @@
         <br>
         <input type="text" name="username" placeholder="Username">
         <br><br><input type="text" name="email" placeholder="email">
-        <br><br><input type="text" name = "classteacher" placeholder="Which class is allotted to you ?">
+        <h4><input type="radio" name = "hod" value = "hod" id = "head_of"  onchange = "is_faculty()">Hod</h4>
+        <h4><input type="radio" name  = "hod" value = "class_teacher" id  = 'faculty' onchange = "is_faculty()">Faculty</h4>
+        <br><br><input type="text" name  ="department"  id  = "department" placeholder="Which department are you from "> 
+        <br><br><input type="hidden" name = "classteacher" placeholder="Which years class Teacher are you ?" id = "year">
         <br><br><input type="password" name  ="password" placeholder="password">
         <br><br><input type="password" name = "password2" placeholder="confirmpasword">
         <br><br><input type="contact" name = "contact" placeholder = "Contact number">

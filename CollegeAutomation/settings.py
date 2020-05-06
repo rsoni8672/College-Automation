@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'registrations',
     'CollegeAutomation',
     'AlumniTracking',
+    'KeyPermission',
+    'AttendanceRequest',
 
 
 ]
@@ -136,3 +138,13 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'rahul.soni@spit.ac.in'
 EMAIL_HOST_PASSWORD = '8433607052'
+
+firebaseConfig = {
+    "apiKey": "AIzaSyBvMU6j3Y_EB9wKODelaVxIO6rQvIFoHp4",
+    "authDomain": "collegeautomation-53c7e.firebaseapp.com",
+    "databaseURL": "https://collegeautomation-53c7e.firebaseio.com",
+    "projectId": "collegeautomation-53c7e",
+    "storageBucket": "collegeautomation-53c7e.appspot.com",
+    "messagingSenderId": "279475633755",
+    "appId": "1:279475633755:web:33abdeae519a0526c1c97e"
+  }

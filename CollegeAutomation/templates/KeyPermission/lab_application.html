@@ -1,0 +1,38 @@
+
+<html>
+
+<head>
+
+</head>
+<body>
+    <form action="/KeyPermission/apply_lab" method="POST">
+        {%csrf_token%}
+    <input type="text" name = "labs_list" value = "{{labs}}" placeholder="List of labs required">
+    <input type="hidden" name = "localId" value  = "{{localId}}">
+    <input type="date" name = "requested_date" value="{{date}}" placeholder="Requested Date">
+    <input type="text" name = "purpose" value = "{{purpose}}"placeholder="Why do you want the lab?">
+    <input type="time" name="Start_Time"  value  = "{{StartTime}}" placeholder="Start Time">
+    <input type="time" name = "End_Time" value="{{EndTime}}" placeholder="End Time">
+    <button type = "submit"> Check Availability</button>
+
+    </form>
+<h1>These are the labs available as per your time. Please select from these or check for other labs.</h1>
+
+{% for i in rooms %}
+<h1>{{i}}</h1>
+{% endfor %}
+    {% if i == 1%}
+    <form action="/KeyPermission/confirm_lab" method="POST">
+        {%csrf_token %}
+    <input type="hidden" name="labs_list" value = "{{labs}}">
+    <input type="hidden" name = "localId" value  = "{{localId}}">
+    <input type="text" name = "confirmed_labs", placeholder = 'Confirmed Labs(Eg.602,603)'>
+    <input type="hidden" name = "requested_date" value="{{date}}" placeholder="Requested Date">
+    <input type="hidden" name = "purpose" value = "{{purpose}}"placeholder="Why do you want the lab?">
+    <input type="hidden" name="Start_Time"  value  = "{{StartTime}}" placeholder="Start Time">
+    <input type="hidden" name = "End_Time" value="{{EndTime}}" placeholder="End Time">
+    <button type="submit"> Submit</button>
+    </form>
+    {% endif %}
+</body>
+</html>

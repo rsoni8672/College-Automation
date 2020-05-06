@@ -6,8 +6,12 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from .models import *
 from CollegeAutomation.settings import*
+from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
+
 # Create your views here.
 #Alumni Site 
+@csrf_exempt
 def alumnihome2(request):
     userid = auth.get_user(request).id
     Alumni = alumni.objects.get(userid = userid)
@@ -17,7 +21,7 @@ def alumnihome2(request):
     return render(request, "AlumniTracking/alumnihome.html", {'Alumni':Alumni ,'experiences':Experiences, 'friends':Friends})
 
 
-
+@csrf_exempt
 def alumniregister(request):
     if request.method == "POST":
         username  = request.POST.get('username')
@@ -41,6 +45,7 @@ def alumniregister(request):
             return render( request , "AlumniTracking/login.html")
     else:
         return render(request, 'AlumniTracking/alumniregister.html')
+@csrf_exempt
 def alumnilogin(request):
     if request.method == "POST":
         username = request.POST.get('username')   
@@ -51,7 +56,7 @@ def alumnilogin(request):
             Alumni = alumni.objects.get( userid = user.id )
         else:
             return HttpResponse("invalid Credentials")
-        return render(request, "AlumniTracking/alumnihome.html", {'Alumni':Alumni})
+        return redirect(alumnihome2)
     return render(request, "AlumniTracking/login.html")
 
 def updateprofile(request):
@@ -78,7 +83,7 @@ def updateprofile(request):
 # def adminhome(request):
 #     print("Hello world")
     
-
+@csrf_exempt
 def addannouncement(request):
     if request.method  == "POST":
         Name  = request.POST.get('Eventname')
@@ -104,3 +109,44 @@ def addannouncement(request):
         return HttpResponse("Done")
     else:
         return render(request, 'AlumniTracking/adminhome.html')
+@csrf_exempt
+def searchBatchMates(request):
+    userid  = auth.get_user(request).id
+    user  = User.objects.get(id = userid)
+    Alumni = alumni.objects.get(userid = user)
+    print(Alumni)
+    branch =  Alumni.branch
+    year = Alumni.passoutyear
+
+    BatchMates = alumni.objects.filter(branch = branch, passoutyear = year)
+    return render(request, 'AlumniTracking/batchmates.html', {'BatchMates':BatchMates}) 
+@csrf_exempt    
+def search_by_company(request):
+    if request.method == "POST":
+        company_name  = request.POST.get('companyname')
+        Experience  = experience.objects.filter(organizationname  = company_name)
+        print(Experience)
+        return render(request, 'AlumniTracking/searchresults.html', {'Experience':Experience, 'CompanyName':company_name})
+    
+@csrf_exempt
+def search_by_alumni(request):
+    if request.method == "POST":
+        Name  = request.POST.get('alumni_name')
+        A = []
+        print("Name ", Name)
+        if(len(Name.split(' ')) >=2 ):
+           Name = Name.split(' ')    
+        if(len(Name) >= 2):
+            user  = User.objects.filter( Q(first_name__contains = Name[0])|Q(last_name__contains  = Name[1]))
+            print("User 1", user, len(user))
+        else:
+            user  = User.objects.filter(first_name__contains = Name)
+            print("User 2" , user)
+        for i in user:
+            print(i.id)
+            Alumni = alumni.objects.get(userid = i.id)
+            print("Alumni", Alumni)
+            A.append(Alumni)
+        print("A",A)  
+        return render(request, 'AlumniTracking/searchbyalumni.html', {'user':user, 'Alumnus':A})
+    
