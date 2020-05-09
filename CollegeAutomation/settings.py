@@ -137,5 +137,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'rahul.soni@spit.ac.in'
-EMAIL_HOST_PASSWORD = '8433607052'
+EMAIL_HOST_PASSWORD = ''
 
