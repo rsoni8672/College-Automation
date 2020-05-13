@@ -255,3 +255,111 @@ def approve(request):
         booking = db.child('FinalBookings').child(id).update({'principal_approved':1})
         return redirect('/KeyPermission/check_applications')
     
+def check_key_permission_hod(request):
+    if request.method == "POST":
+        Bookings = db.child('FinalBookings').shallow().get().val()
+        Final_bookings = []
+        localId = request.POST.get('userId')
+        print( "LocalId :" ,localId)
+        dept  = db.child('Users').child('Authorities').child('HOD').child(localId).get().val()['Department']
+        rooms_list = db.child('Department_Rooms').child(dept).get().val().split(',')
+        rooms_list = [i.strip() for i in rooms_list]
+        print(rooms_list)
+        for i in Bookings:
+            b = False
+            requested_rooms =  db.child('FinalBookings').child(i).child('rooms').get().val().split(',')
+            requested_rooms = [i.strip() for i in requested_rooms]
+            print(requested_rooms)
+            for j in requested_rooms:
+                if j in rooms_list:
+                    b = True
+                    break
+            if b == True:
+                if db.child('FinalBookings').child(i).child('Hod_approved').get().val()==0:
+                    f = db.child('FinalBookings').child(i).get().val()
+                    userid = f['user_id']
+                    Student_data = db.child('Users').child('Students').child(userid).get().val()
+                    print(type(Student_data))
+
+                    Final_bookings.append({
+                    'id': i,
+                    'student':Student_data,
+                    'room_no':f['rooms'],
+                    'date':f['date'],
+                    'start_time':f['start_time'],
+                    'end_time':f['end_time'],
+                    'purpose':f['purpose']
+                    })
+                
+        return render(request , 'KeyPermission/key_permission_hod.html', {'bookings':Final_bookings, 'localId':localId})
+def approve_hod(request):
+    if request.method == "POST":
+        id  = request.POST.get('booking_id')
+        booking = db.child('FinalBookings').child(id).update({'Hod_approved':1})
+        Bookings = db.child('FinalBookings').shallow().get().val()
+        Final_bookings = []
+        localId = request.POST.get('userId')
+        print( "LocalId :" ,localId)
+        dept  = db.child('Users').child('Authorities').child('HOD').child(localId).get().val()['Department']
+        rooms_list = db.child('Department_Rooms').child(dept).get().val().split(',')
+        rooms_list = [i.strip() for i in rooms_list]
+        print(rooms_list)
+        for i in Bookings:
+            b = False
+            requested_rooms =  db.child('FinalBookings').child(i).child('rooms').get().val().split(',')
+            requested_rooms = [i.strip() for i in requested_rooms]
+            print(requested_rooms)
+            for j in requested_rooms:
+                if j in rooms_list:
+                    b = True
+                    break
+            if b == True:
+                if db.child('FinalBookings').child(i).child('Hod_approved').get().val()==0:
+                    f = db.child('FinalBookings').child(i).get().val()
+                    userid = f['user_id']
+                    Student_data = db.child('Users').child('Students').child(userid).get().val()
+                    print(type(Student_data))
+
+                    Final_bookings.append({
+                    'id': i,
+                    'student':Student_data,
+                    'room_no':f['rooms'],
+                    'date':f['date'],
+                    'start_time':f['start_time'],
+                    'end_time':f['end_time'],
+                    'purpose':f['purpose']
+                    })
+                
+        return render(request , 'KeyPermission/key_permission_hod.html', {'bookings':Final_bookings, 'localId': localId})              
+
+
+def approve_principal(request):
+    if request.method  == "POST":
+        userId  = request.POST.get('userId')
+        print('User Id', userId)
+        id  = request.POST.get('booking_id')
+        db.child('FinalBookings').child(id).update({'principal_approved': 1})
+
+        if( userId in db.child('Users').child('Authorities').child('Principal').shallow().get().val()):
+            print("Principal Detected")
+            Bookings = db.child('FinalBookings').shallow().get().val()
+            Final_bookings = []
+            for i in Bookings:
+                if db.child('FinalBookings').child(i).child('principal_approved').get().val() == 0:
+                    f =db.child('FinalBookings').child(i).get().val()
+                    userid  = f['user_id']
+                    Student  = db.child('Users').child('Students').child(userid).get().val()
+                        
+                    Final_bookings.append({
+                        'id':i,
+                        'student':Student,
+                        'room_no':f['rooms'],
+                        'date':f['date'],
+                        'start_time':f['start_time'],
+                        'end_time':f['end_time'],
+                        'purpose':f['purpose']
+                    })
+            print(Final_bookings)
+
+
+            return render(request, 'registrations/principal_home.html', {'localId': userId, 'requests':Final_bookings} )

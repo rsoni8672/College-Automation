@@ -1,4 +1,6 @@
-<!-- <html>
+<!-- 
+
+<html>
 <head>
         
         <meta charset="utf-8">
@@ -22,7 +24,7 @@
                     </tr>
                   </thead>
 <tbody>
-    {% for f in requests %}
+    {% for f in bookings %}
     <tr>
 
         <td>
@@ -35,7 +37,7 @@
         <td>{{f.end_time}}</td>
         <td>{{f.purpose}}</td>
         <td>
-            <form action="/KeyPermission/approve_principal" method="POST">
+            <form action="/KeyPermission/approve_hod" method="POST">
                 {%csrf_token %}
                 <input type="hidden" name="booking_id" value="{{f.id}}">
                 <input type="hidden" name  = "userId" value="{{localId}}">
@@ -51,7 +53,9 @@
         </tr>
     </table>
 </body>
-</html> -->
+</html>
+
+ -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -177,7 +181,7 @@
 </div>
 <div class="container" style="color:white;">
 	<br><br><br>
-    <table class="table table-dark table-hover">
+    <table  class="table table-dark table-hover">
             <thead>
                     <tr>
                       <th>Students Name</th>
@@ -191,7 +195,7 @@
                     </tr>
                   </thead>
 <tbody>
-    {% for f in requests %}
+    {% for f in bookings %}
     <tr>
 
         <td>
@@ -204,11 +208,11 @@
         <td>{{f.end_time}}</td>
         <td>{{f.purpose}}</td>
         <td>
-            <form action="/KeyPermission/approve_principal" method="POST">
+            <form action="/KeyPermission/approve_hod" method="POST">
                 {%csrf_token %}
                 <input type="hidden" name="booking_id" value="{{f.id}}">
                 <input type="hidden" name  = "userId" value="{{localId}}">
-            <button type = "submit" class="btn btn-info" > Accept</button>
+            <button type = "submit" class="btn btn-info"> Accept</button>
             </form>
 
         </td>

@@ -12,17 +12,17 @@ firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
 auth = firebase.auth()
 def register(request):
-    Branch_DICT = {'COMPS':6, 'IT':4, 'ETRX':3, 'EXTC':5, 'MCA':4}
+    Branch_DICT = {'COMPS':6, 'IT':4, 'ETRX':3, 'EXTC':5, 'MCA':7}
     if request.method == "POST":
         username  = request.POST.get('username')
         firstname  = request.POST.get('firstname')
         email = request.POST.get('email')
-        current_year = request.POST.get('class')
+        current_year = request.POST.get('current_year')
         password1  = request.POST.get('password')
         password2 = request.POST.get('password2')
         print(password1, password2)
         comtactnumber  = request.POST.get('contact')
-        branch = request.POST.get('class')
+        branch = request.POST.get('branch')
         print(branch)
         # if User.objects.filter(username = username).exists():
         #     return HttpResponse("Username Aldready exists")
@@ -148,16 +148,40 @@ def authoritylogin(request):
         print(user['localId'])
         if( user['localId'] in db.child('Users').child('Authorities').child('Principal').shallow().get().val()):
             print("Principal Detected")
-            return render(request, 'registrations/principal_home.html')
+            
+            
+            Bookings = db.child('FinalBookings').shallow().get().val()
+            Final_bookings = []
+            for i in Bookings:
+                if db.child('FinalBookings').child(i).child('principal_approved').get().val() == 0:
+                    f =db.child('FinalBookings').child(i).get().val()
+                    userid  = f['user_id']
+                    Student  = db.child('Users').child('Students').child(userid).get().val()
+                        
+                    Final_bookings.append({
+                        'id':i,
+                        'user':user,
+                        'student':Student,
+                        'room_no':f['rooms'],
+                        'date':f['date'],
+                        'start_time':f['start_time'],
+                        'end_time':f['end_time'],
+                        'purpose':f['purpose']
+                    })
+            print(Final_bookings)
+
+
+            return render(request, 'registrations/principal_home.html', {'localId': user['localId'], 'requests':Final_bookings} )
+
+
         if(user['localId'] in db.child('Users').child('Authorities').child('HOD').shallow().get().val()):
             Attendance_Applications = db.child()
             print("HOD DETECTED")
-            return render(request, 'registrations/hod_home.html')
+            return render(request, 'registrations/hod_home.html', {'localId': user['localId']} )
         if(user['localId'] in db.child('Users').child('Authorities').child('Class_Teachers').shallow().get().val()):
             print("HOD DETECTED")
-            return render(request, 'registrations/hod_home.html')
+            return render(request, 'registrations/class_teacher_home.html', {'localId': user['localId']})
         return HttpResponse("Tdfndkdgx")
     return render(request, "registrations/authoritylogin.html")
-
 
 
