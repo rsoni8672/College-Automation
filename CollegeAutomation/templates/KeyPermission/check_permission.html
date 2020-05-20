@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+ <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Students Name</th>
+        <th>Department</th>
+        <th>Email/ Contact Number</th>
+        <th>Requested Rooms</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Purpose</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+          {% for f in FinalBookings %}
+
+        <tr>
+        
+        <td>{{f.user.first_name}}</td>
+        <td>{{f.student.branch.classname}}</td>
+        <td>{{f.student.contactnumber}}   {{f.student.email}}</td>
+        <td>{{f.room_no}}</td>
+        <td>{{f.date}}</td>
+        <td>{{f.start_time}}</td>
+        <td>{{f.end_time}}</td>
+        <td>{{f.purpose}}</td>
+        <td>
+            <form action="/KeyPermission/approve" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{f.id}}">
+            <button type="submit">Accept</button>
+            </form>
+            <form action="/KeyPermission/call_a_meet" method="POST">
+                {% csrf_token %}
+            <button type="submit">Call a meet</button></form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

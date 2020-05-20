@@ -1,15 +1,21 @@
-<html>
+<!-- <html>
 
 <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
 </head>
 <body>
-    <form action="" method="POST">
+    <form action="/registration/authority" method="POST">
 {% csrf_token %}
         <input type="text" name = "firstname" placeholder = "Your Name"> 
-        <br>
-        <input type="text" name="username" placeholder="Username">
+        <br><input type="text" name="username" placeholder="Username">
         <br><br><input type="text" name="email" placeholder="email">
-        <br><br><input type="text" name = "classteacher" placeholder="Which class is allotted to you ?">
+        <h4><input type="radio" name = "hod" value = "hod" id = "head_of"  onchange = "is_faculty()">Hod</h4>
+        <h4><input type="radio" name  = "hod" value = "class_teacher" id  = 'faculty' onchange = "is_faculty()">Faculty</h4>
+        
+        <br><br><input type="text" name  ="department"  id  = "department" placeholder="Which department are you from "> 
+        <br><br><input type="hidden" name = "classteacher" placeholder="Which years class Teacher are you ?" id = "year">
         <br><br><input type="password" name  ="password" placeholder="password">
         <br><br><input type="password" name = "password2" placeholder="confirmpasword">
         <br><br><input type="contact" name = "contact" placeholder = "Contact number">
@@ -19,5 +25,254 @@
         
 
     </form>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>requests</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+    function is_faculty(){
+    
+        var rad = document.getElementById('faculty');
+        var ip = document.getElementById('year');
+        var ip2  = document.getElementById('year2');    
+        console.log($(rad).is(':checked'));
+        console.log( $(rad).val());
+        if ($(rad).is(':checked') && $(rad).val() == 'class_teacher') {
+           ip.type = 'text'
+         //ip.setAttribute('display', 'block')
+          ip2.setAttribute('display','block')
+            // append goes here
+        
+    }
+    if ($(rad).is(':checked') == false && $(rad).val() == 'class_teacher') {
+          ip.setAttribute('type','hidden');
+         // ip.setAttribute('display', 'none')
+          ip2.setAttribute('display','none')
+    }
+    }
+
+    </script>
+<style>
+
+    #mainselection select {
+   border: 0;
+   color: #60666c;
+   background: #f1f1f1;
+   /*font-size: 20px;
+   font-weight: bold;*/
+   padding: 2px 10px;
+   width: 100%;
+   height: inherit;
+   *width: 350px;
+   *background: white;
+   -webkit-appearance: none;
+}
+
+#mainselection {
+    height: 53px;
+   overflow:hidden;
+   /*-moz-border-radius: 9px 9px 9px 9px;
+   -webkit-border-radius: 9px 9px 9px 9px;
+   border-radius: 9px 9px 9px 9px;
+   box-shadow: 1px 1px 11px #330033;*/
+   background: #f1f1f1 url("http://i62.tinypic.com/15xvbd5.png") no-repeat scroll 319px center;
+}
+
+select:focus{
+    background-color: #ddd;
+  outline: none;
+}
+
+ /*-----------------------*/
+
+.registerbtn {
+  background-color: #294a70;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+
+
+
+/* Full-width input fields */
+input[type=text], input[type=password], input[type=date], input[type=file] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=date]:focus, input[type=file]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+        position: relative;
+        left: 25%;
+        top: 50%;
+  width: 50%;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 10px 40px;
+}
+
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.header {
+  background-color: #111111;
+
+}
+.headf{
+        background-color: #294a70 ;
+        z-index: -1;
+    }
+</style>
+</head>
+<body background="https://assets.awwwards.com/awards/images/2015/04/pattern.jpg">
+
+<div class="header" style="height: 95px; color:#294a70; position: relative">
+    <img src="https://www.spit.ac.in/wp-content/themes/spit-main/images/SPIT_logo.png" style="margin-top: 5px; float: left; padding-left: 15px;">
+    <a href="http://www.spit.ac.in/"><img src="https://www.spit.ac.in/wp-content/themes/spit-main/images/red/logo.gif" style="padding-top: 7px;"></a>
+</div>
+<div class="headf" style="height: 30px;">
+    <i style="color: #ffffff; padding-left:25px; ">Attendance Application Portal for Students</i>
+</div>
+<br><br>
+<div class="card">
+  <div class="container">
+      <form class="form-horizontal" action="/registration/authority" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+    <br>
+    <label for="firstname"><b>Name</b></label>
+    <input type="text" name = "firstname" placeholder = "Your Name"> 
+
+    <label for="username"><b>User Name</b></label>
+    <input type="text" name="username" placeholder="Username">
+
+    <label for="email"><b>Name</b></label>
+    <input type="text" name="email" placeholder="email">
+
+    <h4><input type="radio" name = "hod" value = "hod" id = "head_of"  onchange = "is_faculty()">Hod</h4>
+    <h4><input type="radio" name  = "hod" value = "class_teacher" id  = 'faculty' onchange = "is_faculty()">Faculty</h4>
+        <label for="department"><b> Which department are you in ?</b></label>
+    <input type="text" name  ="department"  id  = "department" placeholder="Which department are you from "> 
+ 
+    <label for="classteacher"  style="display:none"><b> Which years class Teacher are you ?</b></label>
+    <input type="hidden" name = "classteacher" placeholder="Which years class Teacher are you ?" id = "year">
+
+    <label for="password"><b>Password</b></label>
+    <input type="password" name  ="password" placeholder="password">
+        
+    <label for="password2"><b>Confirm Password</b></label>
+    <input type="password" name = "password2" placeholder="confirmpasword">
+    
+    <label for="contact"><b>Contact Number</b></label>
+    <input type="text" name = "contact" placeholder = "Contact number">
+
+    <!-- <label for="psw"><b>Class</b></label>
+          <div id="mainselection">
+              <select>
+                <option>Select </option>
+                <option>FE</option>
+                <option>SE</option>
+                <option>TE</option>
+                <option>BE</option>
+              </select>
+          </div><br>
+
+
+     <label for="psw"><b>Branch</b></label>
+          <div id="mainselection">
+              <select>
+                <option>Select </option>
+                <option>Comps</option>
+                <option>IT</option>
+                <option>Extc</option>
+                <option>Etrx</option>
+                <option>MCA</option>
+              </select>
+          </div><br> -->
+
+
+    <!-- <label for="psw-repeat"><b>Reason</b></label>
+    <input type="text" placeholder="Reason " name="psw-repeat" required>
+
+    <label for="psw"><b>From Date</b></label>
+    <input type="date" id="birthday" name="birthday">
+
+        <label for="psw"><b>To Date</b></label>
+    <input type="date" id="birthday" name="birthday">
+
+
+    <br><label for="psw"><b>Proof</b></label>
+      <input type="file" name="fileToUpload" id="fileToUpload"> -->
+
+
+    <button type="submit" class="registerbtn">Apply</button>
+      </form>
+  </div>
+</div>
+<br><br><br>
+<div class="w3-container w3-black">
+    <p align="center" style="color: #9F9F9F; font-size: small">Bharatiya Vidya Bhavans Sardar Patel Institute of Technology Munshi Nagar, Andheri (West), Mumbai 400 058</p>
+<p align="center" style="font-size: small">(91)-(022)-26707440, 26287250</p>
+    <ul id="" class="cnss-social-icon " style="text-align:center;">
+        <li class="cn-fa-facebook cn-fa-icon " style="display:inline-block;">
+            <a class="" target="_blank" href="https://www.facebook.com/SPITCOLLEGE/" title="Facebook" style="width:18px;height:18px;padding:3px 0;margin:2px;color: #ffffff;border-radius: 50%;">
+                <i title="Facebook" style="font-size:12px;" class="fa fa-facebook"></i>
+            </a>
+        </li>
+        <li class="cn-fa-twitter cn-fa-icon " style="display:inline-block;">
+            <a class="" target="_blank" href="https://twitter.com/bvbspit" title="Twitter" style="width:18px;height:18px;padding:3px 0;margin:2px;color: #ffffff;border-radius: 50%;">
+                <i title="Twitter" style="font-size:12px;" class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="cn-fa-linkedin cn-fa-icon " style="display:inline-block;">
+            <a class="" target="_blank" href="https://www.linkedin.com/school/bhartiya-vidya-bhavans-sardar-patel-institute-of-technology-munshi-nagar-andheri-mumbai/" title="LinkedIn" style="width:18px;height:18px;padding:3px 0;margin:2px;color: #ffffff;border-radius: 50%;">
+                <i title="LinkedIn" style="font-size:12px;" class="fa fa-linkedin"></i>
+            </a>
+        </li>
+    </ul>
+</div>
 </body>
 </html>

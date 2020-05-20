@@ -1,0 +1,20 @@
+
+<html>
+
+<head>
+
+</head>
+<body>
+    
+    <form action="/AlumniTracking/updateprofile" method="POST">
+    {% csrf_token %}
+    <input type="text" name  = "organizationname" placeholder="Organization Name">
+    <input type="text" name  = "position" placeholder="Postion">
+    <input type="text" name  = "description" placeholder="Description of the Profile">
+    <input type="date" name  = "joindate" placeholder="Date Of joining">
+    <input type="text" name = "workingpresently" placeholder="Are you presently Working Here">
+
+<button type="submit"> Update my Profile </button>
+    </form>
+</body>
+</html>

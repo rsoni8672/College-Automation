@@ -1,0 +1,258 @@
+<!-- 
+
+<html>
+<head>
+        
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body class="container">
+    <table  class="table table-hover">
+            <thead>
+                    <tr>
+                      <th>Students Name</th>
+                      <th>Email/ Contact Number</th>
+                      <th>Requested Rooms</th>
+                      <th>Date</th>
+                      <th>Start Time</th>
+                      <th>End Time</th>
+                      <th>Purpose</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+<tbody>
+    {% for f in bookings %}
+    <tr>
+
+        <td>
+        {{f.student.First_Name}}    
+        </td>
+        <td> {{f.student.Email}}/{{f.student.Contact_Number}}</td>
+        <td>{{f.room_no}}</td>
+        <td>{{f.date}}</td>
+        <td>{{f.start_time}}</td>
+        <td>{{f.end_time}}</td>
+        <td>{{f.purpose}}</td>
+        <td>
+            <form action="/KeyPermission/approve_hod" method="POST">
+                {%csrf_token %}
+                <input type="hidden" name="booking_id" value="{{f.id}}">
+                <input type="hidden" name  = "userId" value="{{localId}}">
+            <button type = "submit"> Accept</button>
+            </form>
+
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+                  <tr>
+
+        </tr>
+    </table>
+</body>
+</html>
+
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>requests</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<style>
+    p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+    /* Popup container - can be anything you want */
+.popup {
+  position: absolute;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 2;
+  top: 125%;
+  left: 50%;
+  margin-left: 800px;
+    margin-top: 100px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+    z-index: 1;
+    visibility: hidden;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+
+    .header {
+  background-color: #111111;
+
+}
+    .headf{
+        background-color: #294a70 ;
+        z-index: -1;
+    }
+</style>
+</head>
+<body background="https://assets.awwwards.com/awards/images/2015/04/pattern.jpg">
+
+<!--
+<ul>
+#294a70
+    { for req in all_request %}
+        <li><a href="/request/{ req.student_name }}/">{ req.student_name }}</a></li>
+        <li>{ req.student_class }}</li>
+        <li>{ req.reason }}</li>
+        <li>{ req.start_date }}</li>
+        <li>{ req.end_date }}</li>
+    {endfor %}
+
+</ul>-->
+<div class="header" style="height: 95px; color:#294a70; position: relative">
+    <img src="https://www.spit.ac.in/wp-content/themes/spit-main/images/SPIT_logo.png" style="margin-top: 5px; float: left; padding-left: 15px;">
+    <a href="http://www.spit.ac.in/"><img src="https://www.spit.ac.in/wp-content/themes/spit-main/images/red/logo.gif" style="padding-top: 7px;"></a>
+    <img src="https://cdn4.iconfinder.com/data/icons/ios-edge-glyph-12/25/User-Circle-512.png" style="float: right; position: absolute; right: 10px; top: 8px;" onclick="myFunction()" height="80px;">
+
+    <div class="popup" onclick="myFunction()" style="z-index: 6;">
+        <span class="popuptext" id="myPopup" style="z-index: 6;">Ms. Reeta Koshy<Br><a href="/request"><input type="submit" class="btn btn-info" value="Logout"></a></span>
+    </div>
+
+
+</div>
+<div class="headf" style="height: 30px;">
+    <i style="color: #ffffff; padding-left:25px; ">Attendance Approval Portal for the Authority</i>
+</div>
+<div class="container" style="color:white;">
+	<br><br><br>
+    <table  class="table table-dark table-hover">
+            <thead>
+                    <tr>
+                      <th>Students Name</th>
+                      <th>Email/ Contact Number</th>
+                      <th>Requested Rooms</th>
+                      <th>Date</th>
+                      <th>Start Time</th>
+                      <th>End Time</th>
+                      <th>Purpose</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+<tbody>
+    {% for f in bookings %}
+    <tr>
+
+        <td>
+        {{f.student.First_Name}}    
+        </td>
+        <td> {{f.student.Email}}/{{f.student.Contact_Number}}</td>
+        <td>{{f.room_no}}</td>
+        <td>{{f.date}}</td>
+        <td>{{f.start_time}}</td>
+        <td>{{f.end_time}}</td>
+        <td>{{f.purpose}}</td>
+        <td>
+            <form action="/KeyPermission/approve_hod" method="POST">
+                {%csrf_token %}
+                <input type="hidden" name="booking_id" value="{{f.id}}">
+                <input type="hidden" name  = "userId" value="{{localId}}">
+            <button type = "submit" class="btn btn-info"> Accept</button>
+            </form>
+
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+                  <tr>
+
+        </tr>
+    </table>
+</div>
+<br><br><br>
+<br><br><br>
+<div class="w3-container w3-black">
+    <p align="center" style="color: #9F9F9F; font-size: small">Bharatiya Vidya Bhavans Sardar Patel Institute of Technology Munshi Nagar, Andheri (West), Mumbai 400 058</p>
+<p align="center" style="font-size: small">(91)-(022)-26707440, 26287250</p>
+    <ul id="" class="cnss-social-icon " style="text-align:center;">
+        <li class="cn-fa-facebook cn-fa-icon " style="display:inline-block;">
+            <a class="" target="_blank" href="https://www.facebook.com/SPITCOLLEGE/" title="Facebook" style="width:18px;height:18px;padding:3px 0;margin:2px;color: #ffffff;border-radius: 50%;">
+                <i title="Facebook" style="font-size:12px;" class="fa fa-facebook"></i>
+            </a>
+        </li>
+        <li class="cn-fa-twitter cn-fa-icon " style="display:inline-block;">
+            <a class="" target="_blank" href="https://twitter.com/bvbspit" title="Twitter" style="width:18px;height:18px;padding:3px 0;margin:2px;color: #ffffff;border-radius: 50%;">
+                <i title="Twitter" style="font-size:12px;" class="fa fa-twitter"></i>
+            </a>
+        </li>
+        <li class="cn-fa-linkedin cn-fa-icon " style="display:inline-block;">
+            <a class="" target="_blank" href="https://www.linkedin.com/school/bhartiya-vidya-bhavans-sardar-patel-institute-of-technology-munshi-nagar-andheri-mumbai/" title="LinkedIn" style="width:18px;height:18px;padding:3px 0;margin:2px;color: #ffffff;border-radius: 50%;">
+                <i title="LinkedIn" style="font-size:12px;" class="fa fa-linkedin"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+</body>
+<script>
+// When the user clicks on div, open the popup
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+</script>
+</html>

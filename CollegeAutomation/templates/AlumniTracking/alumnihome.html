@@ -1,0 +1,21 @@
+<html>
+
+<head></head>
+<body>
+    {{ Alumni }}
+<button><a href="/AlumniTracking/updateprofile">Update Profile </a></button>
+<button><a href="/AlumniTracking/searchbatchmates">Search Your Batchmates</a></button>
+<h1>
+   Your experiences
+</h1>
+{% for experience in experiences %}
+<h1>{{experience}}</h1>
+{% endfor %}
+<!-- <h1>See what your friends are Doing.</h1>
+{% for friend in friends  %}
+<h1>{{ forloop.counter }}</h1>
+<h1>{{ friend }}</h1>
+{% endfor %} -->
+
+</body>
+</html>
